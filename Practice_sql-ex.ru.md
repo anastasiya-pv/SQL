@@ -50,7 +50,9 @@
 **ON **pc.model=product.model
 **WHERE** type='pc' and speed >=450
 ---
-
-
+**Exercise 10**- *Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price*: 
+**SELECT** model,price **FROM** printer
+**WHERE** price=(**SELECT MAX**(price) **FROM** printer)
+---
 
 
