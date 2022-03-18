@@ -44,7 +44,12 @@
 **SELECT DISTINCT** maker **FROM** product
 **WHERE** type='PC' and maker **NOT IN**(**SELECT** maker **FROM** product **WHERE** type='laptop')
 ---
-
+**Exercise 9**- *Найдите производителя, выпускающего ПК, но не ПК-блокноты.*: 
+**SELECT DISTINCT** maker **FROM** PC
+**JOIN** product
+**ON **pc.model=product.model
+**WHERE** type='pc' and speed >=450
+---
 
 
 
