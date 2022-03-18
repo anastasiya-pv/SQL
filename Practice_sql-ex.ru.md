@@ -40,6 +40,10 @@
 **ON** pc.model=product.model  
 **WHERE** maker='B'  
 ---
+**Exercise 8**- *Найдите производителя, выпускающего ПК, но не ПК-блокноты.*: 
+**SELECT DISTINCT** maker **FROM** product
+**WHERE** type='PC' and maker **NOT IN**(**SELECT** maker **FROM** product **WHERE** type='laptop')
+---
 
 
 
