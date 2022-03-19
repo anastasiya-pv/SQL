@@ -54,5 +54,25 @@
 **SELECT** model,price **FROM** printer
 **WHERE** price=(**SELECT MAX**(price) **FROM** printer)
 ---
-
-
+**Exercise 11**- *Найдите среднюю скорость ПК.*: 
+SELECT AVG(speed) FROM PC
+---
+**Exercise 12**- *Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.*:
+SELECT AVG(speed) FROM laptop
+where price>1000
+---
+**Exercise 13**- *Найдите среднюю скорость ПК, выпущенных производителем A.*:
+SELECT AVG(speed) FROM PC
+JOIN product
+ON pc.model=product.model
+WHERE maker = 'A'
+---
+**Exercise 14**- *Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.*:
+SELECT ships.class,ships.name,country FROM Ships
+JOIN classes
+ON classes.class=ships.class
+WHERE numGuns >= 10
+---
+**Exercise 15**- *Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD*:
+SELECT hd FROM pc GROUP BY hd HAVING COUNT(*) >=2
+---
