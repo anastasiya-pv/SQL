@@ -144,8 +144,7 @@ WHERE price = (SELECT MAX(price)FROM (
   SELECT price FROM Printer) t2  
  )  
 ---
-**Exercise 25**- *Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди всех ПК, имеющих наименьший объем RAM. Вывести: Maker
-*:  
+**Exercise 25**- *Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди всех ПК, имеющих наименьший объем RAM. Вывести: Maker*:  
 SELECT DISTINCT maker FROM pc  
 JOIN product  
 ON product.model=pc.model  
