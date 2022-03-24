@@ -128,4 +128,30 @@ ON product.model=pc.model
 WHERE speed >=750 AND maker IN(SELECT maker FROM laptop JOIN product ON product.model=laptop.model WHERE speed >=750)  
 GROUP BY maker  
 ---
-
+**Exercise 24**- *Перечислите номера моделей любых типов, имеющих самую высокую цену по всей имеющейся в базе данных продукции.*:  
+SELECT model  
+FROM (  
+ SELECT model, price FROM pc  
+ UNION    
+ SELECT model, price FROM Laptop    
+ UNION  
+ SELECT model, price FROM Printer) t1  
+WHERE price = (SELECT MAX(price)FROM (  
+  SELECT price FROM pc 
+  UNION  
+  SELECT price FROM Laptop  
+  UNION  
+  SELECT price FROM Printer) t2  
+ )  
+---
+**Exercise 25**- *Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди всех ПК, имеющих наименьший объем RAM. Вывести: Maker
+*:  
+SELECT DISTINCT maker FROM pc
+JOIN product
+ON product.model=pc.model
+WHERE maker
+IN(SELECT DISTINCT maker FROM product
+WHERE type='printer') AND speed= (SELECT MAX(speed) FROM pc
+WHERE ram =(SELECT MIN(ram) FROM pc)) AND
+ram=(SELECT MIN(ram) FROM pc)
+---
