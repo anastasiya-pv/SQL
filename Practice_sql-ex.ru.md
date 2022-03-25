@@ -154,3 +154,23 @@ WHERE type='printer') AND speed= (SELECT MAX(speed) FROM pc
 WHERE ram =(SELECT MIN(ram) FROM pc)) AND  
 ram=(SELECT MIN(ram) FROM pc)  
 ---
+**Exercise 26**- *Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя цена.*:  
+SELECT SUM(prices) / SUM(models) avg_price FROM
+(SELECT COUNT(pc.model)models, SUM(price) prices FROM pc
+JOIN product
+ON product.model=pc.model
+WHERE maker ='A'
+UNION
+SELECT COUNT(laptop.model), SUM(price) FROM laptop
+JOIN product
+ON product.model=laptop.model
+WHERE maker ='A') t1
+---
+**Exercise 27**- *Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.*:  
+SELECT maker, AVG(hd) avg_hd FROM pc
+JOIN product 
+ON product.model=pc.model
+WHERE maker IN(SELECT DISTINCT maker FROM product WHERE TYPE = 'printer')
+GROUP BY maker
+---
+
