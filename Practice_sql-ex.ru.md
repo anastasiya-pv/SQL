@@ -154,23 +154,37 @@ WHERE type='printer') AND speed= (SELECT MAX(speed) FROM pc
 WHERE ram =(SELECT MIN(ram) FROM pc)) AND  
 ram=(SELECT MIN(ram) FROM pc)  
 ---
-**Exercise 26**- *Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя цена.*:  
-SELECT SUM(prices) / SUM(models) avg_price FROM
-(SELECT COUNT(pc.model)models, SUM(price) prices FROM pc
-JOIN product
-ON product.model=pc.model
-WHERE maker ='A'
-UNION
-SELECT COUNT(laptop.model), SUM(price) FROM laptop
-JOIN product
-ON product.model=laptop.model
-WHERE maker ='A') t1
+**Exercise 26**- *Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя цена.*:    
+SELECT SUM(prices) / SUM(models) avg_price FROM  
+(SELECT COUNT(pc.model)models, SUM(price) prices FROM pc  
+JOIN product  
+ON product.model=pc.model  
+WHERE maker ='A'  
+UNION  
+SELECT COUNT(laptop.model), SUM(price) FROM laptop  
+JOIN product  
+ON product.model=laptop.model  
+WHERE maker ='A') t1  
 ---
-**Exercise 27**- *Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.*:  
-SELECT maker, AVG(hd) avg_hd FROM pc
-JOIN product 
-ON product.model=pc.model
-WHERE maker IN(SELECT DISTINCT maker FROM product WHERE TYPE = 'printer')
-GROUP BY maker
+**Exercise 27**- *Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.*:    
+SELECT maker, AVG(hd) avg_hd FROM pc  
+JOIN product   
+ON product.model=pc.model  
+WHERE maker IN(SELECT DISTINCT maker FROM product WHERE TYPE = 'printer')  
+GROUP BY maker  
 ---
-
+**Exercise 28**- *Используя таблицу Product, определить количество производителей, выпускающих по одной модели.*:      
+SELECT COUNT(maker)FROM product  
+WHERE maker IN(SELECT maker FROM product  
+GROUP BY maker  
+HAVING COUNT(model) = 1  
+)  
+---
+**Exercise 29**- *В предположении, что приход и расход денег на каждом пункте приема фиксируется не чаще одного раза в день [т.е. первичный ключ (пункт, дата)], написать запрос с выходными данными (пункт, дата, приход, расход). Использовать таблицы Income_o и Outcome_o*:  
+SELECT table1.point, table1.date, inc, out  
+FROM income_o table1 LEFT JOIN outcome_o table2 ON table1.point = table2.point  
+AND table1.date = table2.date  
+UNION  
+SELECT table2.point, table2.date, inc, out  
+FROM income_o table1 RIGHT JOIN outcome_o table2 ON table1.point = table2.point  
+AND table1.date = table2.date  
