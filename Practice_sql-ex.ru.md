@@ -47,7 +47,7 @@
 **Exercise 9**- *Найдите производителя, выпускающего ПК, но не ПК-блокноты.*:   
 **SELECT DISTINCT** maker **FROM** PC  
 **JOIN** product  
-**ON **pc.model=product.model  
+**ON**pc.model=product.model  
 **WHERE** type='pc' and speed >=450  
 ---
 **Exercise 10**- *Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price*:   
@@ -188,3 +188,13 @@ UNION
 SELECT table2.point, table2.date, inc, out  
 FROM income_o table1 RIGHT JOIN outcome_o table2 ON table1.point = table2.point  
 AND table1.date = table2.date  
+---
+Exercise 30- В предположении, что приход и расход денег на каждом пункте приема фиксируется произвольное число раз (первичным ключом в таблицах является столбец code), требуется получить таблицу, в которой каждому пункту за каждую дату выполнения операций будет соответствовать одна строка.
+Вывод: point, date, суммарный расход пункта за день (out), суммарный приход пункта за день (inc). Отсутствующие значения считать неопределенными (NULL).
+:    
+SELECT point, date, SUM(sum_out), SUM(sum_inc) FROM  
+(SELECT point, date, SUM(inc) as sum_inc, null as sum_out FROM Income GROUP BY point, date   
+UNION  
+SELECT point, date, null as sum_inc, SUM(out) as sum_out FROM Outcome GROUP BY point, date ) t1  
+GROUP BY point, date order by point  
+---  
