@@ -220,3 +220,9 @@ Exercise 34-По Вашингтонскому международному до�
 SELECT name from classes,ships   
 WHERE launched >=1922 AND displacement>35000 AND type='bb' AND ships.class = classes.class  
 ---
+Exercise 35-В таблице Product найти модели, которые состоят только из цифр или только из латинских букв (A-Z, без учета регистра).
+Вывод: номер модели, тип модели.
+SELECT model, type FROM product
+WHERE upper(model) NOT LIKE '%[^A-Z]%'
+---
+OR model NOT LIKE '%[^0-9]%'
