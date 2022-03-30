@@ -198,3 +198,25 @@ UNION
 SELECT point, date, null as sum_inc, SUM(out) as sum_out FROM Outcome GROUP BY point, date ) t1  
 GROUP BY point, date order by point  
 ---  
+Exercise 31-Для классов кораблей, калибр орудий которых не менее 16 дюймов, укажите класс и страну.   
+SELECT class, country FROM Classes  
+WHERE bore >= 16  
+---
+Exercise 32-Одной из характеристик корабля является половина куба калибра его главных орудий (mw). С точностью до 2 десятичных знаков определите среднее значение mw для кораблей каждой страны, у которой есть корабли в базе данных.  
+SELECT country,cast(avg(power(bore,3)/2) as NUMERIC(6,2)) weight FROM(SELECT country,bore,name FROM Classes    
+JOIN Ships   
+On classes.class=ships.class  
+UNION  
+SELECT country, bore, ship FROM Classes   
+JOIN Outcomes   
+ON classes.class=outcomes.ship) t1  
+Group by country  
+---
+Exercise 33-Укажите корабли, потопленные в сражениях в Северной Атлантике (North Atlantic). Вывод: ship.  
+SELECT ship FROM Outcomes
+WHERE battle = 'North Atlantic' and result = 'sunk'
+---
+Exercise 34-По Вашингтонскому международному договору от начала 1922 г. запрещалось строить линейные корабли водоизмещением более 35 тыс.тонн. Укажите корабли, нарушившие этот договор (учитывать только корабли c известным годом спуска на воду). Вывести названия кораблей.    
+SELECT name from classes,ships   
+WHERE launched >=1922 AND displacement>35000 AND type='bb' AND ships.class = classes.class  
+---
