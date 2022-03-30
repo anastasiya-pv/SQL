@@ -224,5 +224,10 @@ Exercise 35-В таблице Product найти модели, которые с
 Вывод: номер модели, тип модели.
 SELECT model, type FROM product
 WHERE upper(model) NOT LIKE '%[^A-Z]%'
----
 OR model NOT LIKE '%[^0-9]%'
+---
+Exercise 36-Перечислите названия головных кораблей, имеющихся в базе данных (учесть корабли в Outcomes).    
+SELECT name FROM ships WHERE class = name       
+UNION    
+SELECT ship name  FROM classes,outcomes  WHERE classes.class = outcomes.ship    
+---
