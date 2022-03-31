@@ -231,3 +231,13 @@ SELECT name FROM ships WHERE class = name
 UNION    
 SELECT ship name  FROM classes,outcomes  WHERE classes.class = outcomes.ship    
 ---
+Exercise 37- Найдите классы, в которые входит только один корабль из базы данных (учесть также корабли в Outcomes).  
+SELECT class FROM (  
+SELECT classes.class, name FROM Ships  
+JOIN Classes ON classes.class = ships.class  
+UNION  
+SELECT class, ship FROM Outcomes  
+JOIN Classes ON ship = class) t1  
+GROUP BY class  
+HAVING COUNT(class) = 1  
+---
