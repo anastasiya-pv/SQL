@@ -246,3 +246,13 @@ SELECT country FROM classes
 GROUP BY country  
 HAVING COUNT(DISTINCT type) = 2  
 ---
+Exercise 39-Найдите корабли, `сохранившиеся для будущих сражений`; т.е. выведенные из строя в одной битве (damaged), они участвовали в другой, произошедшей позже.  
+SELECT DISTINCT o.ship from outcomes o   
+JOIN battles b   
+ON o.battle = b.name   
+WHERE o.result = 'damaged' AND  
+EXISTS (SELECT battles.date FROM battles   
+JOIN outcomes   
+ON outcomes.battle = battles.name  
+WHERE battles.date > b.date and outcomes.ship = o.ship)  
+---
