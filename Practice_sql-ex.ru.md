@@ -246,7 +246,7 @@ SELECT country FROM classes
 GROUP BY country  
 HAVING COUNT(DISTINCT type) = 2  
 ---
-Exercise 39-Найдите корабли, `сохранившиеся для будущих сражений`; т.е. выведенные из строя в одной битве (damaged), они участвовали в другой, произошедшей позже.  
+Exercise 39-Найдите корабли, сохранившиеся для будущих сражений; т.е. выведенные из строя в одной битве (damaged), они участвовали в другой, произошедшей позже.  
 SELECT DISTINCT o.ship from outcomes o   
 JOIN battles b   
 ON o.battle = b.name   
@@ -256,3 +256,22 @@ JOIN outcomes
 ON outcomes.battle = battles.name  
 WHERE battles.date > b.date and outcomes.ship = o.ship)  
 ---
+Exercise 40-Найти производителей, которые выпускают более одной модели, при этом все выпускаемые производителем модели являются продуктами одного типа.
+Вывести: maker, type  
+SELECT DISTINCT maker, max(type) FROM product  
+GROUP BY maker  
+HAVING COUNT(distinct type) = 1 AND COUNT(model) > 1  
+---
+Exercise 41-Для каждого производителя, у которого присутствуют модели хотя бы в одной из таблиц PC, Laptop или Printer,
+определить максимальную цену на его продукцию.Вывод: имя производителя, если среди цен на продукцию данного производителя присутствует NULL, то выводить для этого производителя NULL,иначе максимальную цену.  
+WITH x as(SELECT model,price FROM PC  
+UNION  
+SELECT model,price FROM Laptop  
+UNION  
+SELECT model,price FROM Printer)  
+SELECT DISTINCT y.maker, CASE WHEN COUNT(*) = COUNT(price) THEN MAX(price) END  
+FROM Product as y, x  
+WHERE y.model=x.model  
+GROUP BY y.maker  
+---
+
