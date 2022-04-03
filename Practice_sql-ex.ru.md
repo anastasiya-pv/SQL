@@ -283,5 +283,10 @@ Exercise 43-Укажите сражения, которые произошли �
 SELECT name FROM battles  
 WHERE year(date) NOT IN (SELECT launched FROM ships WHERE launched IS NOT NULL)  
 ---
-
+Exercise 44-Найдите названия всех кораблей в базе данных, начинающихся с буквы R.  
+SELECT DISTINCT name FROM (SELECT ship AS name  FROM outcomes  
+UNION  
+SELECT name FROM ships) t1  
+WHERE name LIKE 'R%'  
+---
 
