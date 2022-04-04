@@ -297,5 +297,16 @@ UNION
 SELECT ship FROM Outcomes  
 WHERE ship LIKE '% % %'  
 ---
+Exercise 46-Для каждого корабля, участвовавшего в сражении при Гвадалканале (Guadalcanal), вывести название, водоизмещение и число орудий.  
+SELECT DISTINCT Outcomes.ship, displacement, numGuns   
+FROM (SELECT name AS ship, displacement, numGuns FROM Ships   
+JOIN Classes   
+ON Classes.class=Ships.class   
+UNION   
+SELECT class AS ship, displacement, numGuns FROM Classes) t1   
+RIGHT JOIN Outcomes    
+ON Outcomes.ship=t1.ship   
+WHERE battle = 'Guadalcanal'  
+---
 
 
