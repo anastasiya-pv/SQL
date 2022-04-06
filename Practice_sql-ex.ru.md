@@ -308,5 +308,34 @@ RIGHT JOIN Outcomes
 ON Outcomes.ship=t1.ship   
 WHERE battle = 'Guadalcanal'  
 ---
+Exercise 47-
+---
+Exercise 48-Найдите классы кораблей, в которых хотя бы один корабль был потоплен в сражении.  
+SELECT class FROM Classes t1  
+JOIN outcomes t2  
+ON t1.class=t2.ship  
+WHERE result = 'sunk'    
+UNION  
+SELECT class FROM ships   
+JOIN outcomes   
+ON ships.name=outcomes.ship   
+WHERE result = 'sunk'  
+---
+Exercise 49-Найдите названия кораблей с орудиями калибра 16 дюймов (учесть корабли из таблицы Outcomes).  
+SELECT Ships.name  
+FROM Classes   
+JOIN Ships   
+ON Classes.class = ships.class  
+WHERE bore = 16  
+UNION  
+SELECT Outcomes.ship FROM Outcomes   
+JOIN Classes   
+ON Classes.class = Outcomes.ship  
+WHERE bore = 16  
+---
+Exercise 50- Найдите сражения, в которых участвовали корабли класса Kongo из таблицы Ships.    
+SELECT DISTINCT battle FROM outcomes  
+WHERE ship IN (SELECT name FROM ships WHERE class = 'Kongo')  
+---
 
 
