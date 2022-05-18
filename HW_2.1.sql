@@ -213,6 +213,8 @@ create table roles_employee(
 id serial primary key,
 employee_id Int not null unique,
 role_id Int not null,
+foreign key (employee_id)
+references employees(id),
 foreign key (role_id)
 references roles(id));
 
